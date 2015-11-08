@@ -1,0 +1,21 @@
+baseurl = "http://www.daanhorn.nl/"
+languageCode = "en-us"
+title = "Daan Horn"
+disqusShortname = "daanhorn-nl"
+theme = "hyde-x"
+
+PygmentsStyle = "tango"
+
+[author]
+	name = "Daan Horn"
+
+[params]
+	github = "https://github.com/daanhorn"
+	linkedin = "https://www.linkedin.com/in/daanhorn"
+
+	theme = "theme-base-08"
+
+	tagline = "Development"
+
+	googleAuthorship = "11150916..."
+	googleAnalytics = "UA-246..."
