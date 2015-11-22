@@ -1,21 +1,41 @@
-baseurl = "http://www.daanhorn.nl/"
+baseurl = "http://localhost:1313"
+title = "daanhorn.nl"
+canonifyurls = true
+paginate = 10
+theme = "startbootstrap-clean-blog"
 languageCode = "en-us"
-title = "Daan Horn"
-disqusShortname = "daanhorn-nl"
-theme = "hyde-x"
-
-PygmentsStyle = "tango"
+copyright = "Code released under the Apache 2.0 license."
 
 [author]
-	name = "Daan Horn"
+  name = "Daan Horn"
 
 [params]
-	github = "https://github.com/daanhorn"
-	linkedin = "https://www.linkedin.com/in/daanhorn"
+  DateForm = "Mon, Jan 2, 2006"
+  Description = "Software Engineering Blog"
+  Author = "Daan Horn"
+  email = "daanhornnl@gmail.com"
+  Ganalytics = "XX-00000000-0"
 
-	theme = "theme-base-08"
+[[params.social]]
+  title = "twitter"
+  url = "https://twitter.com/horndaan"
+[[params.social]]
+  title = "github"
+  url = "https://github.com/daanhorn"
 
-	tagline = "Development"
-
-	googleAuthorship = "11150916..."
-	googleAnalytics = "UA-246..."
+[[menu.main]]
+  name = "home"
+  url = "/"
+  weight = -200
+[[menu.main]]
+  name = "Archives"
+  url = "/post/"
+  weight = -190
+[[menu.main]]
+  name = "Categories"
+  url = "/categories/"
+  weight = -180
+[[menu.main]]
+  name = "Tags"
+  url = "/tags/"
+  weight = -180
