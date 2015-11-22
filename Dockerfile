@@ -1,5 +1,5 @@
 FROM debian:wheezy
-MAINTAINER daanhornnl@gmail.nl
+MAINTAINER daanhornnl@gmail.com
 
 # Install pygments (for syntax highlighting) 
 RUN apt-get -qq update \
@@ -20,16 +20,17 @@ RUN mkdir /usr/share/site
 WORKDIR /usr/share/site
 
 # Expose default hugo port
-EXPOSE 1313
+EXPOSE 80
 
 # Automatically build site
 ADD site/ /usr/share/site
+RUN hugo
 
 # By default, serve site
 ENV HUGO_BASE_URL http://localhost:1313
 CMD hugo server \
 	--baseUrl=${HUGO_BASE_URL} \
-	--port=1313 \
+	--port=80 \
 	--appendPort=false \
-#	--bind=172.17.42.1 \
+	--bind=0.0.0.0 \
 	--disableLiveReload=true
