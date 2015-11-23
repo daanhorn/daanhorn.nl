@@ -20,6 +20,9 @@ copyright = "Code released under the Apache 2.0 license."
   title = "twitter"
   url = "https://twitter.com/horndaan"
 [[params.social]]
+  title = "linkedin"
+  url = "https://www.linkedin.com/in/daanhorn"
+[[params.social]]
   title = "github"
   url = "https://github.com/daanhorn"
 
