@@ -14,7 +14,7 @@ copyright = "Code released under the Apache 2.0 license."
   Description = "Software Engineering Blog"
   Author = "Daan Horn"
   email = "daanhornnl@gmail.com"
-  Ganalytics = "XX-00000000-0"
+  Ganalytics = "UA-70517409-1"
 
 [[params.social]]
   title = "twitter"
