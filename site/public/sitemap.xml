@@ -2,24 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://localhost/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2015-11-22T13:03:47+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost/about/</loc>
+    <loc>http://localhost:1313/contact/</loc>
     <lastmod>2015-11-22T13:03:47+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost/contact/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2015-11-22T13:03:47+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost/post/test/</loc>
-    <lastmod>2015-11-22T15:01:15+01:00</lastmod>
+    <loc>http://localhost:1313/post/work-in-progress/</loc>
+    <lastmod>2015-12-14T16:52:45+01:00</lastmod>
   </url>
   
 </urlset>

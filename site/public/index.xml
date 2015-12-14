@@ -2,20 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>daanhorn.nl</title>
-    <link>http://localhost/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on daanhorn.nl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Code released under the Apache 2.0 license.</copyright>
     <lastBuildDate>Sun, 22 Nov 2015 13:03:47 +0100</lastBuildDate>
-    <atom:link href="http://localhost/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>contact</title>
+      <link>http://localhost:1313/contact/</link>
+      <pubDate>Sun, 22 Nov 2015 13:03:47 +0100</pubDate>
+      
+      <guid>http://localhost:1313/contact/</guid>
+      <description>&lt;p&gt;Please fill out the form below to get in touch with me.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>about</title>
-      <link>http://localhost/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Sun, 22 Nov 2015 13:03:47 +0100</pubDate>
       
-      <guid>http://localhost/about/</guid>
+      <guid>http://localhost:1313/about/</guid>
       <description>
 
 &lt;h2 id=&#34;believe:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Believe&lt;/h2&gt;
@@ -34,22 +44,13 @@ Continuous Delivery, DevOps, Containerization (Docker), JVM languages (Java, Sca
     </item>
     
     <item>
-      <title>contact</title>
-      <link>http://localhost/contact/</link>
-      <pubDate>Sun, 22 Nov 2015 13:03:47 +0100</pubDate>
+      <title>work in progress</title>
+      <link>http://localhost:1313/post/work-in-progress/</link>
+      <pubDate>Mon, 14 Dec 2015 16:52:45 +0100</pubDate>
       
-      <guid>http://localhost/contact/</guid>
-      <description>&lt;p&gt;Please fill out the form below to get in touch with me.&lt;/p&gt;
+      <guid>http://localhost:1313/post/work-in-progress/</guid>
+      <description>&lt;p&gt;This site is still work in progress. Please be a little more patient.&lt;/p&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>test</title>
-      <link>http://localhost/post/test/</link>
-      <pubDate>Sun, 22 Nov 2015 15:01:15 +0100</pubDate>
-      
-      <guid>http://localhost/post/test/</guid>
-      <description></description>
     </item>
     
   </channel>
