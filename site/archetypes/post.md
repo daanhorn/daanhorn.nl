@@ -1,13 +1,11 @@
 +++
 tags = [
-    "templates",
-    "themes",
     "development",
 ]
 categories = [
-    "Development",
+    "Development"
 ]
-image = "/img/about-bg.jpg" #optional image - "/img/about-bg.jpg" is the default
+image = "/img/post-bg.jpg"
 description = ""
 draft = true
 +++

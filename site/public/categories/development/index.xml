@@ -2,21 +2,154 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Development on daanhorn.nl</title>
-    <link>http://localhost:1313/categories/development/</link>
+    <link>http://localhost/categories/development/</link>
     <description>Recent content in Development on daanhorn.nl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Code released under the Apache 2.0 license.</copyright>
-    <lastBuildDate>Mon, 14 Dec 2015 16:52:45 +0100</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Dec 2015 10:25:30 +0100</lastBuildDate>
+    <atom:link href="http://localhost/categories/development/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>work in progress</title>
-      <link>http://localhost:1313/post/work-in-progress/</link>
-      <pubDate>Mon, 14 Dec 2015 16:52:45 +0100</pubDate>
+      <title>Building a blog using Hugo, GitHub, Digital Ocean and Docker</title>
+      <link>http://localhost/post/mysite/</link>
+      <pubDate>Wed, 23 Dec 2015 10:25:30 +0100</pubDate>
       
-      <guid>http://localhost:1313/post/work-in-progress/</guid>
-      <description>&lt;p&gt;This site is still work in progress. Please be a little more patient.&lt;/p&gt;
+      <guid>http://localhost/post/mysite/</guid>
+      <description>
+
+&lt;h1 id=&#34;building-a-blog-using-hugo-github-digital-ocean-and-docker:4f4c808308b16bb720b007496475210f&#34;&gt;Building a blog using Hugo, GitHub, Digital Ocean and Docker&lt;/h1&gt;
+
+&lt;p&gt;Finally, my first post! So first off all, why did I build this site anyway? Well the truth is that I finally had some spare time to spend, so I wanted to learn something new and thought that writing about it forced me to learn it quite well. And while I&amp;rsquo;m writing, I might just as well share it with the rest of the world. So during the last few weeks, among other fun stuff, I build this blog using Hugo, GitHub, Digital Ocean and Docker. While this may not be the way you would setup your first blog, it was my goal to learn something new and to just have some fun while I was at it. And surely I had a lot of fun doing this!&lt;/p&gt;
+
+&lt;h2 id=&#34;why-hugo:4f4c808308b16bb720b007496475210f&#34;&gt;Why Hugo&lt;/h2&gt;
+
+&lt;p&gt;I was looking for a great blogging tool and found out that static site generators would fit my needs, as I love to write Markdown and have the site generated from that. So a few tools made sense, among which Jekyll, Middleman and ofcourse Hugo. In the end I choose Hugo for several reasons:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Speed&lt;/strong&gt;. Hugo generates pages really fast which makes it comfortable to continuously generating the site while developing and creating content&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Features&lt;/strong&gt;. Hugo is quite complete feature wise and support things like archetypes, themes, templates and taxonomies&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment&lt;/strong&gt;. Hugo is written in Go, which makes installation of Hugo, which is just a binary, very easy&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Community&lt;/strong&gt;. Hugo is being actively developed and used&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt;. Hugo has great documentation on &lt;a href=&#34;https://gohugo.io&#34;&gt;https://gohugo.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fun&lt;/strong&gt;. Hard to explain this, but somehow I have fun using Hugo!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;why-digital-ocean-and-docker:4f4c808308b16bb720b007496475210f&#34;&gt;Why Digital Ocean and Docker&lt;/h2&gt;
+
+&lt;p&gt;So then you may ask why I choose Digital Ocean and Docker to build my blog on. Well, I wanted to be able to have full control myself and not depend on my provider for anything. Once again, because I like to have fun configuring and running my own stuff. Therefore I would like a cloud platform and from earlier experience I liked the ease of use, performance and pricing of Digital Ocean. On top of that I wanted to run Docker, because that makes it easy to deploy my blog and also run anything else besides my blog. This is easy to do, because Digital Ocean offers Docker as a &lt;a href=&#34;https://www.digitalocean.com/features/one-click-apps/&#34;&gt;One-Click Application&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;building-a-new-site:4f4c808308b16bb720b007496475210f&#34;&gt;Building a new site&lt;/h2&gt;
+
+&lt;p&gt;To build a site using Hugo, you first need to install Hugo itself. This is well documented on &lt;a href=&#34;https://gohugo.io/overview/installing/&#34;&gt;this&lt;/a&gt; page, so I will not repeat those words here again.&lt;/p&gt;
+
+&lt;p&gt;Next thing is to generate a new site, for which Hugo has a useful command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ hugo new site mysite
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To create a skeleton content page, use:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ hugo new about.md
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After that you can add a custom theme. I used the &lt;code&gt;bootstrap-clean-blog&lt;/code&gt; theme, but many can be found &lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;here&lt;/a&gt;. A theme can be easily added to the &lt;code&gt;themes&lt;/code&gt; folder. Using git makes this easy, as most themes are hosted on GitHub. E.g.:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ mkdir themes
+$ cd themes
+$ git clone https://github.com/humboldtux/startbootstrap-clean-blog.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To prevent this error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ERROR: 2015/12/23 Unable to render [page/archive.html _default/archive.html theme/page/archive.html theme/_default/archive.html]
+ERROR: 2015/12/23 Expecting to find a template in either the theme/layouts or /layouts in one of the following relative locations [page/archive.html _default/archive.html theme/page/archive.html theme/_default/archive.html]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I added &lt;code&gt;layouts/_default/list.html&lt;/code&gt; to override the same template in the &lt;code&gt;bootstrap-clean-blog&lt;/code&gt; theme. In this file I changed line 22 to only look for an archive.htlm in &lt;code&gt;post&lt;/code&gt; content:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{{ range .Paginator.Pages }}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;into:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{{ range where .Paginator.Pages &amp;quot;Section&amp;quot; &amp;quot;post&amp;quot; }}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To have a first look at what is created so far, start a Hugo server and use the correct theme and build the drafts (initial content is marked as draft):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cd ..
+$ hugo server --theme=startbootstrap-clean-blog --buildDrafts
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;editing:4f4c808308b16bb720b007496475210f&#34;&gt;Editing&lt;/h2&gt;
+
+&lt;p&gt;To edit the content I use Atom (&lt;a href=&#34;https://atom.io&#34;&gt;https://atom.io&lt;/a&gt;) and the Markdown-Writer plugin.&lt;br /&gt;
+When the Hugo server is started using &lt;code&gt;-s&lt;/code&gt; and &lt;code&gt;-w&lt;/code&gt; parameters, it will automatically reload any open Javascript enabled browser pages using LiveReload technology (don&amp;rsquo;t forget the dot at the end of the line, which points to the source directory that is being used by Hugo to regenerate pages after sources have changed):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ hugo server --theme=startbootstrap-clean-blog --buildDrafts -ws .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Change &lt;code&gt;content/about.md&lt;/code&gt; to make it look like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;+++
+date = &amp;quot;2015-12-23T22:12:34+01:00&amp;quot;
+draft = false
+title = &amp;quot;about&amp;quot;
+menu = &amp;quot;main&amp;quot;
+weight = -150
+type = &amp;quot;about&amp;quot;
+
++++
+
+Hello world!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;--theme=startbootstrap-clean-blog&lt;/code&gt; can be left out if it has been added to the &lt;code&gt;config.toml&lt;/code&gt; configuration file in the root directory:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;theme = &amp;quot;startbootstrap-clean-blog&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Undraft the content file if you&amp;rsquo;re satisfied and running the server again looks like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ hugo undraft about.md
+$ hugo server -ws .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you can see the &lt;code&gt;about&lt;/code&gt; section in the menu on the top of the page.&lt;/p&gt;
+
+&lt;h2 id=&#34;simple-workflow:4f4c808308b16bb720b007496475210f&#34;&gt;Simple Workflow&lt;/h2&gt;
+
+&lt;p&gt;As said before, I use Docker as a platform to run the blog on. So how does a typical workflow look like? I tried to keep it simple for now. It currently looks like this:&lt;br /&gt;
+1. Create site and content on local machine
+2. Commit all to GitHub
+3. Pull from GitHub on Digital Ocean machine
+4. Build and run Docker image on Digital Ocean machine&lt;/p&gt;
+
+&lt;p&gt;To ease deployment a little, I&amp;rsquo;ve created some simple Bash scripts to &lt;code&gt;stop&lt;/code&gt;, &lt;code&gt;clean&lt;/code&gt;, &lt;code&gt;build&lt;/code&gt;, and &lt;code&gt;run&lt;/code&gt; the Docker image. They can be found &lt;a href=&#34;https://github.com/daanhorn/daanhorn.nl&#34;&gt;here&lt;/a&gt; on GitHub.&lt;/p&gt;
+
+&lt;h2 id=&#34;possible-changes-improvements:4f4c808308b16bb720b007496475210f&#34;&gt;Possible changes/improvements&lt;/h2&gt;
+
+&lt;p&gt;Although current setup is sufficient for my simple usecase, there could ofcourse be some improvements:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Separate web server (Apache or Nginx). Hugo would only generate the site and the separate web server would actually serve the pages&lt;/li&gt;
+&lt;li&gt;Hosting on GitHub Pages and &lt;code&gt;git&lt;/code&gt; workflow as described &lt;a href=&#34;https://gohugo.io/tutorials/github-pages-blog/&#34;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Docker deployment flow using orchestration and service discovery to ensure high availability and scalability&lt;/li&gt;
+&lt;li&gt;Docker Hub for hosting and building Docker image to simplify the server deployment, as there will be no need for building on the server itself&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;finally:4f4c808308b16bb720b007496475210f&#34;&gt;Finally&lt;/h2&gt;
+
+&lt;p&gt;If you are looking to build a blog yourself, you could use my solution, but maybe you should decide what makes you smile in the end!&lt;/p&gt;
+
+&lt;p&gt;To learn more about Hugo, just read the great documentation: &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;https://gohugo.io/overview/introduction/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Code for my site is hosted on GitHub: &lt;a href=&#34;https://github.com/daanhorn/daanhorn.nl&#34;&gt;https://github.com/daanhorn/daanhorn.nl&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;And finally, I would like to thank Benoit Benedetti for building the &lt;code&gt;bootstrap-clean-blog&lt;/code&gt; theme for Hugo and Yigal Duppen for his Docker / Hugo setup as described &lt;a href=&#34;https://github.com/publysher/docker-hugo&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you have any question or comments, please let me know by contacting me &lt;a href=&#34;http://localhost/contact/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
