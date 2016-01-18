@@ -8,7 +8,6 @@ tags = ["development", "hugo", "github", "digital ocean", "docker"]
 title = "Building a blog using Hugo, GitHub, Digital Ocean and Docker"
 +++
 
-# Building a blog using Hugo, GitHub, Digital Ocean and Docker
 Finally, my first post! So first off all, why did I build this site anyway? Well the truth is that I finally had some spare time to spend, so I wanted to learn something new and thought that writing about it forced me to learn it quite well. And while I'm writing, I might just as well share it with the rest of the world. So during the last few weeks, among other fun stuff, I build this blog using Hugo, GitHub, Digital Ocean and Docker. While this may not be the way you would setup your first blog, it was my goal to learn something new and to just have some fun while I was at it. And surely I had a lot of fun doing this!
 
 ## Why Hugo
