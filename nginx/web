@@ -16,7 +16,7 @@ server {
     ssl_dhparam /var/nginx-conf/ssl-dhparams.pem;
 }
 server {
-    if ($host = "horn.dev"|"daanhorn.nl") {
+    if ($host = "horn.dev|daanhorn.nl") {
         return 301 https://daanhorn.nl$request_uri;
     }
 
