@@ -24,6 +24,10 @@ EXPOSE 443 80
 
 COPY site/ usr/share/site
 COPY nginx/web /etc/nginx/sites-available/web
+COPY /etc/letsencrypt/live/daanhorn.nl/fullchain.pem /home/hugo/cert/daanhorn.nl/fullchain.pem
+COPY /etc/letsencrypt/live/daanhorn.nl/privkey.pem /home/hugo/cert/daanhorn.nl/privkey.pem
+COPY /etc/letsencrypt/options-ssl-nginx.conf /home/hugo/nginx/options-ssl-nginx.conf
+COPY /etc/letsencrypt/ssl-ssl_dhparams.pem /home/hugo/nginx/ssl-ssl_dhparams.pem
 
 RUN cd /etc/nginx/sites-enabled \
 	&& rm default \
