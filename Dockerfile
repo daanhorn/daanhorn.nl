@@ -18,7 +18,7 @@ RUN tar xzf /usr/local/${HUGO_ARCHIVE}.tar.gz -C /usr/local/ \
 	&& rm /usr/local/${HUGO_ARCHIVE}.tar.gz
 
 RUN mkdir -p /usr/share/site \
-	&& mkdir -p /var/certs/daanhorn.nl \
+	&& mkdir -p /var/certs/horn.dev \
 	&& mkdir -p /var/nginx \
 	&& mkdir -p /var/www/horn.dev/public_html
 
@@ -26,8 +26,8 @@ EXPOSE 443 80
 
 COPY site/ usr/share/site
 COPY nginx/web /etc/nginx/sites-available/web
-COPY certs/daanhorn.nl/fullchain.pem /var/certs/daanhorn.nl/fullchain.pem
-COPY certs/daanhorn.nl/privkey.pem /var/certs/daanhorn.nl/privkey.pem
+COPY certs/horn.dev/fullchain.pem /var/certs/horn.dev/fullchain.pem
+COPY certs/horn.dev/privkey.pem /var/certs/horn.dev/privkey.pem
 COPY nginx-conf/options-ssl-nginx.conf /var/nginx-conf/options-ssl-nginx.conf
 COPY nginx-conf/ssl-dhparams.pem /var/nginx-conf/ssl-dhparams.pem
 

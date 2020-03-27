@@ -1,2 +1,2 @@
-# daanhorn.nl
+# horn.dev
 My own site

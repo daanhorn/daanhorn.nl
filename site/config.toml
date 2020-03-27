@@ -1,5 +1,5 @@
 baseurl = "http://localhost"
-title = "daanhorn.nl"
+title = "horn.dev"
 canonifyurls = true
 paginate = 10
 theme = "startbootstrap-clean-blog"
