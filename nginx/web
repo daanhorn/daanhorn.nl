@@ -7,7 +7,7 @@ server {
 
     listen 443 ssl;
     ssl_certificate /var/certs/daanhorn.nl/fullchain.pem;
-    ssl_certificate /var/certs/daanhorn.nl/privkey.pem;
+    ssl_certificate_key /var/certs/daanhorn.nl/privkey.pem;
     include /var/nginx-conf/options-ssl-nginx.conf;
     ssl_dhparam /var/nginx-conf/ssl-dhparams.pem;
 }
