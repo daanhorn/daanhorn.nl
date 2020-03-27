@@ -6,10 +6,10 @@ server {
     }
 
     listen 443 ssl;
-    ssl_certificate /home/hugo/cert/daanhorn.nl/fullchain.pem;
-    ssl_certificate /home/hugo/cert/daanhorn.nl/privkey.pem;
-    include /home/hugo/nginx/options-ssl-nginx.conf;
-    ssl_dhparam /home/hugo/nginx/ssl-ssl_dhparams.pem;
+    ssl_certificate /var/certs/daanhorn.nl/fullchain.pem;
+    ssl_certificate /var/certs/daanhorn.nl/privkey.pem;
+    include /var/nginx/options-ssl-nginx.conf;
+    ssl_dhparam /var/nginx/ssl_dhparams.pem;
 }
 server {
     if ($host = daanhorn.nl) {

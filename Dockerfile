@@ -18,16 +18,18 @@ RUN tar xzf /usr/local/${HUGO_ARCHIVE}.tar.gz -C /usr/local/ \
 	&& rm /usr/local/${HUGO_ARCHIVE}.tar.gz
 
 RUN mkdir -p /usr/share/site \
+	&& mkdir -p /var/certs/daanhorn.nl \
+	&& mkdir -p /var/nginx \
 	&& mkdir -p /var/www/horn.dev/public_html
 
 EXPOSE 443 80
 
 COPY site/ usr/share/site
 COPY nginx/web /etc/nginx/sites-available/web
-COPY /etc/letsencrypt/live/daanhorn.nl/fullchain.pem /home/hugo/cert/daanhorn.nl/fullchain.pem
-COPY /etc/letsencrypt/live/daanhorn.nl/privkey.pem /home/hugo/cert/daanhorn.nl/privkey.pem
-COPY /etc/letsencrypt/options-ssl-nginx.conf /home/hugo/nginx/options-ssl-nginx.conf
-COPY /etc/letsencrypt/ssl-ssl_dhparams.pem /home/hugo/nginx/ssl-ssl_dhparams.pem
+COPY /user/hugo/certs/daanhorn.nl/fullchain.pem /var/certs/daanhorn.nl/fullchain.pem
+COPY /user/hugo/certs/daanhorn.nl/privkey.pem /var/certs/daanhorn.nl/privkey.pem
+COPY /user/hugo/nginx/options-ssl-nginx.conf /var/nginx/nginx/options-ssl-nginx.conf
+COPY /user/hugo/nginx/ssl_dhparams.pem /var/nginx/ssl_dhparams.pem
 
 RUN cd /etc/nginx/sites-enabled \
 	&& rm default \
