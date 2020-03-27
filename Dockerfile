@@ -26,10 +26,10 @@ EXPOSE 443 80
 
 COPY site/ usr/share/site
 COPY nginx/web /etc/nginx/sites-available/web
-COPY ../certs/daanhorn.nl/fullchain.pem /var/certs/daanhorn.nl/fullchain.pem
-COPY ../certs/daanhorn.nl/privkey.pem /var/certs/daanhorn.nl/privkey.pem
-COPY ../nginx/options-ssl-nginx.conf /var/nginx/nginx/options-ssl-nginx.conf
-COPY ../nginx/ssl_dhparams.pem /var/nginx/ssl_dhparams.pem
+COPY certs/daanhorn.nl/fullchain.pem /var/certs/daanhorn.nl/fullchain.pem
+COPY certs/daanhorn.nl/privkey.pem /var/certs/daanhorn.nl/privkey.pem
+COPY nginx-conf/options-ssl-nginx.conf /var/nginx-conf/nginx/options-ssl-nginx.conf
+COPY nginx-conf/ssl_dhparams.pem /var/nginx-conf/ssl_dhparams.pem
 
 RUN cd /etc/nginx/sites-enabled \
 	&& rm default \
