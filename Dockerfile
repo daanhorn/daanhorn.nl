@@ -28,7 +28,7 @@ COPY site/ usr/share/site
 COPY nginx/web /etc/nginx/sites-available/web
 COPY certs/daanhorn.nl/fullchain.pem /var/certs/daanhorn.nl/fullchain.pem
 COPY certs/daanhorn.nl/privkey.pem /var/certs/daanhorn.nl/privkey.pem
-COPY nginx-conf/options-ssl-nginx.conf /var/nginx-conf/nginx/options-ssl-nginx.conf
+COPY nginx-conf/options-ssl-nginx.conf /var/nginx-conf/options-ssl-nginx.conf
 COPY nginx-conf/ssl-dhparams.pem /var/nginx-conf/ssl-dhparams.pem
 
 RUN cd /etc/nginx/sites-enabled \
