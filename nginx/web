@@ -1,4 +1,8 @@
 server {
+    if ($host = horn.dev) {
+        return 301 https://daanhorn.nl$request_uri;
+    }
+
     server_name daanhorn.nl;
     location / {
         alias /var/www/horn.dev/public_html/;
@@ -12,8 +16,8 @@ server {
     ssl_dhparam /var/nginx-conf/ssl-dhparams.pem;
 }
 server {
-    if ($host = daanhorn.nl) {
-        return 301 https://$host$request_uri;
+    if ($host = "horn.dev"|"daanhorn.nl") {
+        return 301 https://daanhorn.nl$request_uri;
     }
 
     listen 80;
