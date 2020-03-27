@@ -1,0 +1,25 @@
+server {
+#    server_name horn.dev;
+    server_name localhost;
+
+    location / {
+        alias /var/www/horn.dev/public_html/;
+        autoindex on;
+    }
+
+    listen 80;
+#    listen 443 ssl;
+#    ssl_certificate /home/hugo/certificates/horn.dev/fullchain.pem;
+#    ssl_certificate /home/hugo/certificates/horn.dev/privkey.pem;
+#    include /home/hugo/nginx/options-ssl-nginx.conf;
+#    ssl_dhparam /home/hugo/nginx/ssl-ssl_dhparams.pem;
+}
+#server {
+#    if ($host = horn.dev) {
+#        return 301 https://$host$request_uri;
+#    }
+
+#    listen 80;
+#    server_name horn.dev;
+#    return 404;
+#}

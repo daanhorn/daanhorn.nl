@@ -1,36 +1,32 @@
-FROM debian:wheezy
+FROM debian:9-slim
 MAINTAINER daanhornnl@gmail.com
 
 # Install pygments (for syntax highlighting) 
 RUN apt-get -qq update \
-	&& DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends python-pygments \
+	&& DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends python-pygments nginx \
 	&& rm -rf /var/lib/apt/lists/*
 
-# Download and install hugo
-ENV HUGO_VERSION 0.14
+ENV HUGO_VERSION 0.18
+ENV HUGO_ARCHIVE hugo_${HUGO_VERSION}_Linux-64bit
 ENV HUGO_BINARY hugo_${HUGO_VERSION}_linux_amd64
 
-ADD https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/${HUGO_BINARY}.tar.gz /usr/local/
-RUN tar xzf /usr/local/${HUGO_BINARY}.tar.gz -C /usr/local/ \
+ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_ARCHIVE}.tar.gz /usr/local/
+RUN tar xzf /usr/local/${HUGO_ARCHIVE}.tar.gz -C /usr/local/ \
 	&& ln -s /usr/local/${HUGO_BINARY}/${HUGO_BINARY} /usr/local/bin/hugo \
-	&& rm /usr/local/${HUGO_BINARY}.tar.gz
+	&& rm /usr/local/${HUGO_ARCHIVE}.tar.gz
 
-# Create working directory
-RUN mkdir /usr/share/site
-WORKDIR /usr/share/site
+RUN mkdir -p /usr/share/site \
+	&& mkdir -p /var/www/horn.dev/public_html
 
-# Expose default hugo port
-EXPOSE 80
+EXPOSE 443 80
 
-# Automatically build site
-ADD site/ /usr/share/site
-RUN hugo
+COPY site/ usr/share/site
+COPY nginx/web /etc/nginx/sites-available/web
 
-# By default, serve site
-ENV HUGO_BASE_URL http://localhost
-CMD hugo server \
-	--baseUrl=${HUGO_BASE_URL} \
-	--port=80 \
-	--appendPort=false \
-	--bind=0.0.0.0 \
-	--disableLiveReload=true
+RUN cd /etc/nginx/sites-enabled \
+	&& rm default \
+	&& ln -s ../sites-available/web web
+
+RUN hugo -s /usr/share/site -d /var/www/horn.dev/public_html -b "http://localhost"
+
+CMD ["nginx", "-g", "daemon off;"]
