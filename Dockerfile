@@ -1,9 +1,9 @@
 FROM debian:9-slim
-MAINTAINER daanhornnl@gmail.com
+LABEL maintainer="daanhornnl@gmail.com"
 
 ARG BASE_URL
 
-ENV HUGO_VERSION 0.18
+ENV HUGO_VERSION 0.81.0
 ENV HUGO_ARCHIVE hugo_${HUGO_VERSION}_Linux-64bit
 ENV HUGO_BINARY hugo_${HUGO_VERSION}_linux_amd64
 
