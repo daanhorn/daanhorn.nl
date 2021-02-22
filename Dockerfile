@@ -1,4 +1,4 @@
-FROM debian:9-slim
+FROM debian:10-slim
 LABEL maintainer="daanhornnl@gmail.com"
 
 ARG BASE_URL
@@ -14,11 +14,10 @@ RUN apt-get -qq update \
 
 ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_ARCHIVE}.tar.gz /usr/local/
 RUN tar xzf /usr/local/${HUGO_ARCHIVE}.tar.gz -C /usr/local/ \
-	&& ln -s /usr/local/${HUGO_BINARY}/${HUGO_BINARY} /usr/local/bin/hugo \
+	&& ln -s /usr/local/hugo /usr/local/bin/hugo \
 	&& rm /usr/local/${HUGO_ARCHIVE}.tar.gz
 
 RUN mkdir -p /usr/share/site \
-	&& mkdir -p /var/certs/horn.dev \
 	&& mkdir -p /var/nginx \
 	&& mkdir -p /var/www/horn.dev/public_html
 
