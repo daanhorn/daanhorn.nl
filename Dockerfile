@@ -26,10 +26,6 @@ EXPOSE 443 80
 
 COPY site/ usr/share/site
 COPY nginx/web /etc/nginx/sites-available/web
-COPY certs/horn.dev/fullchain.pem /var/certs/horn.dev/fullchain.pem
-COPY certs/horn.dev/privkey.pem /var/certs/horn.dev/privkey.pem
-COPY nginx-conf/options-ssl-nginx.conf /var/nginx-conf/options-ssl-nginx.conf
-COPY nginx-conf/ssl-dhparams.pem /var/nginx-conf/ssl-dhparams.pem
 
 RUN cd /etc/nginx/sites-enabled \
 	&& rm default \
