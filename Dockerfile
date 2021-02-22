@@ -21,7 +21,7 @@ RUN mkdir -p /usr/share/site \
 	&& mkdir -p /var/nginx \
 	&& mkdir -p /var/www/horn.dev/public_html
 
-EXPOSE 443 80
+EXPOSE 80
 
 COPY site/ usr/share/site
 COPY nginx/web /etc/nginx/sites-available/web

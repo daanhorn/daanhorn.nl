@@ -1,26 +1,9 @@
 server {
-    if ($host = daanhorn.nl) {
-        return 301 https://horn.dev$request_uri;
-    }
-
     server_name horn.dev;
     location / {
         alias /var/www/horn.dev/public_html/;
         autoindex on;
     }
 
-    listen 443 ssl;
-    ssl_certificate /var/certs/horn.dev/fullchain.pem;
-    ssl_certificate_key /var/certs/horn.dev/privkey.pem;
-    include /var/nginx-conf/options-ssl-nginx.conf;
-    ssl_dhparam /var/nginx-conf/ssl-dhparams.pem;
-}
-server {
-    if ($host = "horn.dev|daanhorn.nl") {
-        return 301 https://horn.dev$request_uri;
-    }
-
     listen 80;
-    server_name horn.dev;
-    return 404;
 }
