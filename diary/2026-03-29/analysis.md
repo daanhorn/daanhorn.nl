@@ -272,3 +272,64 @@ The final product definition is now consistent: the site should be an English-la
 ### Technical details
 - The PRD keeps Hugo and DigitalOcean as the default platform choice because the clarified scope remains highly compatible with a static, content-led site.
 - Open implementation choices intentionally left for later include the newsletter provider and the exact privacy-friendly analytics tool.
+
+## Step 5: Translate The PRD Into Sitemap And Wireframes
+
+The next step moved the project from product definition into build planning. I translated the PRD into a concrete sitemap with explicit routes and page responsibilities, then created low-fidelity wireframes for the homepage, writing index, article page, contact page, and hidden archive.
+
+This work matters because it turns an abstract “modern, minimal, writing-first site” into a layout and content hierarchy that can actually be implemented. It also forced several practical decisions, especially around where new writing should live, how legacy content should be preserved, and how newsletter and RSS should show up without becoming top-level product surfaces.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+Let's create a concrete sitemap and low-fidelity wireframes"
+
+**Assistant interpretation:** Convert the approved PRD into a specific page map and rough structural layouts that can guide implementation.
+
+**Inferred user intent:** Reduce ambiguity before design and development by defining the exact site structure and page composition.
+
+### What I did
+- Read the PRD in `/home/daan/Repos/daanhorn.nl/docs/website-refresh-prd.md` to carry its constraints into the next artifact.
+- Created `/home/daan/Repos/daanhorn.nl/docs/website-sitemap-wireframes.md`.
+- Defined a concrete route plan for `/`, `/writing/`, `/writing/<slug>/`, `/contact/`, `/archive/`, and `/index.xml`.
+- Chose to make newsletter a CTA capability rather than a top-level v1 page.
+- Added low-fidelity desktop and mobile wireframes for the homepage, writing index, article page, contact page, and hidden archive page.
+
+### Why
+- The PRD sets direction, but implementation still needs a page-by-page blueprint.
+- Wireframes are the fastest way to agree on structure before spending effort on styling or template code.
+
+### What worked
+- The sitemap aligns cleanly with the small-navigation strategy from the PRD.
+- Separating current writing at `/writing/` from legacy content in `/archive/` creates a clear editorial distinction.
+- The wireframes keep contact and subscription visible without undermining the writing-first nature of the site.
+
+### What didn't work
+- N/A
+
+### What I learned
+- The most consequential IA choice was separating current and legacy writing into distinct experiences rather than trying to soften the old content inside one unified index.
+- Treating newsletter as a distributed CTA instead of a destination page keeps the site aligned with its minimal editorial intent.
+
+### What was tricky to build
+- The tricky part was making the sitemap concrete enough to guide implementation without overcommitting to details that depend on provider selection, such as newsletter flows.
+- Another subtle point was choosing a route model that supports the new brand narrative while still respecting the desire to preserve old content and existing URLs where practical.
+
+### What warrants a second pair of eyes
+- The `/writing/` versus legacy URL strategy should be reviewed during implementation to make sure Hugo content organization and redirects remain straightforward.
+- The homepage hierarchy should be reviewed once real copy exists, because wireframes can validate structure but not final emphasis.
+
+### What should be done in the future
+- Review the sitemap and wireframes together and tighten any page sections before visual design or implementation starts.
+- Turn the wireframes into either a higher-fidelity design brief or directly into Hugo template tasks.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/docs/website-sitemap-wireframes.md` for the new artifact.
+- Cross-check it against `/home/daan/Repos/daanhorn.nl/docs/website-refresh-prd.md` to ensure the page structure still matches the approved product direction.
+- No tests were required because this step added documentation only.
+
+### Technical details
+- The sitemap chooses explicit public routes for primary surfaces and leaves newsletter as a capability rather than a page type.
+- The wireframes include both desktop and mobile stacking behavior to prevent a desktop-only IA from slipping into implementation.
