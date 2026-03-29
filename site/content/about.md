@@ -2,8 +2,6 @@
 date = "2015-11-22T13:03:47+01:00"
 draft = false
 title = "about"
-menu = "main"
-weight = -150
 type = "about"
 
 +++

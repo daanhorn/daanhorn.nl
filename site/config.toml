@@ -1,44 +1,44 @@
-baseurl = "http://localhost"
-title = "horn.dev"
+baseurl = "https://daanhorn.nl"
+title = "Daan Horn"
 canonifyurls = true
 paginate = 10
 theme = "startbootstrap-clean-blog"
 languageCode = "en-us"
-copyright = "Code released under the Apache 2.0 license."
+disableKinds = ["taxonomy", "term"]
+copyright = "Written and published by Daan Horn."
 
 [author]
   name = "Daan Horn"
 
 [params]
-  DateForm = "Mon, Jan 2, 2006"
-  Description = "Software Engineering Blog"
-  Author = "Daan Horn"
+  dateForm = "Jan 2, 2006"
+  description = "Thoughtful writing on engineering productivity, modern ways of working, and AI in software engineering."
+  author = "Daan Horn"
   email = "daanhornnl@gmail.com"
-  Ganalytics = "UA-70517409-1"
+  linkedin = "https://www.linkedin.com/in/daanhorn/"
+  newsletter = ""
+  heroTitle = "I help organizations modernize their technology and ways of working so they can stay ahead of the competition."
+  heroSubtitle = "I write about engineering productivity, modern ways of working, and the practical use of AI in software engineering."
+  homeIntroTitle = "Modernization is never just a technology problem."
+  homeIntroBody = """
+I write about what it takes to improve how software is built and delivered: clearer engineering systems, healthier team habits, and pragmatic modernization work that keeps momentum instead of stalling it.
 
-[[params.social]]
-  title = "twitter"
-  url = "https://twitter.com/horndaan"
-[[params.social]]
-  title = "linkedin"
-  url = "https://www.linkedin.com/in/daanhorn"
-[[params.social]]
-  title = "github"
-  url = "https://github.com/daanhorn"
+This site is where I think in public about engineering productivity, organizational change, and the practical use of AI in software engineering.
+"""
+  homeBackgroundTitle = "Where I'm focused now"
+  homeBackgroundBody = """
+I'm currently working on modernization in the Dutch public sector, drawing on years spent across enterprise software, delivery practices, platform decisions, and technical leadership.
+
+The through-line in that work is simple: lasting change happens when architecture, delivery, and day-to-day team behavior move together.
+"""
+  contactIntro = "If you're trying to modernize systems, improve how engineering teams work, or think more clearly about AI in software delivery, feel free to reach out."
+  archiveIntro = "This archive keeps earlier writing available for reference. It reflects older interests and earlier thinking, not the current center of gravity of the site."
 
 [[menu.main]]
-  name = "home"
-  url = "/"
-  weight = -200
+  name = "Writing"
+  url = "/writing/"
+  weight = 10
 [[menu.main]]
-  name = "Archives"
-  url = "/post/"
-  weight = -190
-[[menu.main]]
-  name = "Categories"
-  url = "/categories/"
-  weight = -180
-[[menu.main]]
-  name = "Tags"
-  url = "/tags/"
-  weight = -180
+  name = "Contact"
+  url = "/contact/"
+  weight = 20

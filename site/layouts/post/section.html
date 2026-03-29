@@ -1,0 +1,25 @@
+{{ partial "header.html" . }}
+
+{{ $posts := where .Site.RegularPages.ByDate.Reverse "Section" "post" }}
+
+<main class="dh-main">
+  <section class="dh-shell dh-page-shell">
+    <p class="dh-kicker">Archive</p>
+    <h1>Archive</h1>
+    <p class="dh-lead">{{ .Site.Params.archiveIntro }}</p>
+  </section>
+
+  <section class="dh-shell dh-section-block">
+    <div class="dh-post-list dh-post-list-compact">
+      {{ range $posts }}
+        <article class="dh-post-card">
+          <p class="dh-meta">{{ .Date.Format ($.Site.Params.dateForm | default "Jan 2, 2006") }}</p>
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 220 }}{{ end }}</p>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+</main>
+
+{{ partial "footer.html" . }}

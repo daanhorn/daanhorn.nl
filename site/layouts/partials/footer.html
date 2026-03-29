@@ -1,0 +1,21 @@
+  <footer class="dh-site-footer">
+    <div class="dh-shell dh-footer-shell">
+      <div>
+        <p class="dh-footer-title">{{ .Site.Title }}</p>
+        <p class="dh-footer-copy">{{ .Site.Params.description }}</p>
+      </div>
+
+      <nav class="dh-footer-links" aria-label="Footer links">
+        {{ with .Site.Params.email }}<a href="mailto:{{ . }}">Email</a>{{ end }}
+        {{ with .Site.Params.linkedin }}<a href="{{ . }}">LinkedIn</a>{{ end }}
+        <a href="{{ "/index.xml" | relURL }}">RSS</a>
+        {{ if .Site.Params.newsletter }}
+          <a href="{{ .Site.Params.newsletter }}">Newsletter</a>
+        {{ else }}
+          <span>Newsletter coming soon</span>
+        {{ end }}
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

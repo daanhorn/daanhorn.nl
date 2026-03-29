@@ -1,35 +1,67 @@
-{{ partial "header.html" .}}
+{{ partial "header.html" . }}
 
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    {{ if isset .Params "image" }}<header class="intro-header" style="background-image: url('{{ .Site.BaseURL }}/{{ .Params.image }}')">
-      {{ else }}<header class="intro-header" style="background-image: url('{{ .Site.BaseURL }}/img/post-bg.jpg')">
-    {{ end }}
-      <div class="container">
-        <div class="row">
-           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-             <div class="post-heading">
-               <h1>{{ .Title }}</h1>
-               <h2 class="subheading">{{ .Description }}</h2>
-               <span class="meta">
-                 {{ partial "meta.html" .}}
-               </span>
-             </div>
-           </div>
-        </div>
+{{ if or (eq .Section "writing") (eq .Section "post") }}
+  {{ $related := first 2 (where (where .Site.RegularPages.ByDate.Reverse "Section" .Section) "Permalink" "ne" .Permalink) }}
+
+  <main class="dh-main">
+    <article class="dh-shell dh-article-shell">
+      <header class="dh-article-header">
+        <p class="dh-kicker">{{ if eq .Section "post" }}Archive{{ else }}Writing{{ end }}</p>
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p class="dh-lead">{{ . }}</p>{{ end }}
+        <p class="dh-meta">{{ .Date.Format (.Site.Params.dateForm | default "Jan 2, 2006") }}</p>
+      </header>
+
+      <div class="dh-prose">
+        {{ .Content }}
       </div>
-    </header>
-
-    <!-- Post Content -->
-    <article>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                  {{ .Content }}
-                  {{ partial "comments.html" .}}
-                </div>
-            </div>
-        </div>
     </article>
 
-{{ partial "footer.html" .}}
+    {{ if gt (len $related) 0 }}
+      <section class="dh-shell dh-section-block">
+        <div class="dh-section-heading">
+          <div>
+            <p class="dh-kicker">Continue reading</p>
+            <h2>More {{ if eq .Section "post" }}archive posts{{ else }}writing{{ end }}</h2>
+          </div>
+        </div>
+
+        <div class="dh-post-list dh-post-list-compact">
+          {{ range $related }}
+            <article class="dh-post-card">
+              <p class="dh-meta">{{ .Date.Format ($.Site.Params.dateForm | default "Jan 2, 2006") }}</p>
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 180 }}{{ end }}</p>
+            </article>
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+
+    <section class="dh-shell dh-section-block dh-contact-strip">
+      <div>
+        <p class="dh-kicker">Stay in touch</p>
+        <h2>Prefer reading in a feed or talking directly?</h2>
+        <p>Subscribe, keep reading, or reach out when the work matches what you're trying to change.</p>
+      </div>
+      <div class="dh-link-cluster">
+        <a class="dh-text-link" href="{{ "/writing/" | relURL }}">All writing</a>
+        <a class="dh-text-link" href="{{ "/index.xml" | relURL }}">RSS</a>
+        {{ with .Site.Params.linkedin }}<a class="dh-text-link" href="{{ . }}">LinkedIn</a>{{ end }}
+        {{ with .Site.Params.email }}<a class="dh-button" href="mailto:{{ . }}">Email</a>{{ end }}
+      </div>
+    </section>
+  </main>
+{{ else }}
+  <main class="dh-main">
+    <section class="dh-shell dh-page-shell">
+      <p class="dh-kicker">Page</p>
+      <h1>{{ .Title }}</h1>
+      <div class="dh-prose">
+        {{ .Content }}
+      </div>
+    </section>
+  </main>
+{{ end }}
+
+{{ partial "footer.html" . }}

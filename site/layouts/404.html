@@ -1,0 +1,16 @@
+{{ partial "header.html" . }}
+
+<main class="dh-main">
+  <section class="dh-shell dh-page-shell">
+    <p class="dh-kicker">404</p>
+    <h1>Page not found</h1>
+    <p class="dh-lead">The page you're looking for isn't here anymore, or the link was never right to begin with.</p>
+    <div class="dh-link-cluster">
+      <a class="dh-button" href="{{ "/" | relURL }}">Go home</a>
+      <a class="dh-text-link" href="{{ "/writing/" | relURL }}">Browse writing</a>
+      <a class="dh-text-link" href="{{ "/contact/" | relURL }}">Contact</a>
+    </div>
+  </section>
+</main>
+
+{{ partial "footer.html" . }}

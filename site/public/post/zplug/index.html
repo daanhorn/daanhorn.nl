@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  
+    
+  
+  
+  
+    
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How to set up the commandline to look and feel good.">
+  <meta name="author" content="Daan Horn">
+
+  <title>Getting comfortable with the commandline, using zplug | Daan Horn</title>
+
+  <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  
+
+  <link href="http://localhost:1313/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:1313/css/clean-blog.min.css" rel="stylesheet">
+  <link href="http://localhost:1313/css/custom.css" rel="stylesheet">
+</head>
+
+<body class="dh-body dh-section-page dh-section-post">
+  <header class="dh-site-header">
+    <div class="dh-shell dh-nav-shell">
+      <a class="dh-brand" href="http://localhost:1313/">Daan Horn</a>
+      <nav class="dh-nav" aria-label="Primary navigation">
+        
+          
+          <a class="dh-nav-link" href="http://localhost:1313/writing/">Writing</a>
+        
+          
+          <a class="dh-nav-link" href="http://localhost:1313/contact/">Contact</a>
+        
+      </nav>
+    </div>
+  </header>
+
+
+
+  
+
+  <main class="dh-main">
+    <article class="dh-shell dh-article-shell">
+      <header class="dh-article-header">
+        <p class="dh-kicker">Archive</p>
+        <h1>Getting comfortable with the commandline, using zplug</h1>
+        <p class="dh-lead">How to set up the commandline to look and feel good.</p>
+        <p class="dh-meta">Feb 2, 2017</p>
+      </header>
+
+      <div class="dh-prose">
+        <p>So you may know that I like to use the commandline alot when developing. To me this became even more pleasant when I started using <a href="http://ohmyz.sh/">oh-my-zsh</a> and it&rsquo;s many useful plugins. It really helps speed thing up with a lot of completions and makes the commandline look a lot better!</p>
+<h1 id="zplug">Zplug</h1>
+<p>After using oh-my-zsh for a while, I recently switched to <a href="https://zplug.sh/">zplug</a> because it is a bit faster and more flexible. One of the great things of zplug is that it is compatible with many different plugins, so I could reuse some of the oh-my-zsh plugins that I like.</p>
+<p>Here is an example of what my commandline looks like now:<br>
+<figure><img src="http://localhost:1313/img/zplug.png"
+    alt="zplug">
+</figure>
+</p>
+<h1 id="themes">Themes</h1>
+<p>To make the commandline look good, zplug can use themes from <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes">oh-my-zsh</a> and <a href="https://github.com/sorin-ionescu/prezto">prezto</a>. I use an oh-my-zsh theme called <a href="https://github.com/agnoster/agnoster-zsh-theme">agnoster</a> which has great support for Git and supports useful Powerline-patched fonts to display little icons that show the state of a Git branch.</p>
+<h1 id="plugins">Plugins</h1>
+<p>Plugins is what makes oh-myzsh, zplug and the like great. There are literally hundreds of plugins, which add support to zplug for all the tools you use occasionally. A list of some of the plugins can be found here:</p>
+<ul>
+<li><a href="https://github.com/unixorn/awesome-zsh-plugins">awesome-zsh-plugins</a></li>
+<li><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins">oh-my-zsh plugins</a></li>
+</ul>
+<p>Some of the plugins I use:</p>
+<ul>
+<li><a href="https://github.com/zplug/zplug">zplug</a></li>
+<li><a href="https://github.com/zsh-users/zsh-completions">zsh-completions</a></li>
+<li><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-syntax-highlighting</a></li>
+<li><a href="https://github.com/zsh-users/zsh-history-substring-search">zsh-history-substring-search</a></li>
+<li><a href="https://github.com/rimraf/k">k</a></li>
+<li><a href="http://jasonm23.github.com/oh-my-git-aliases.html">git</a></li>
+<li><a href="https://github.com/agnoster/agnoster-zsh-theme">agnoster</a></li>
+</ul>
+<h1 id="setup">Setup</h1>
+<p>Getting things set up properly in zplug might be challenging the first time, so I&rsquo;ll explain next what I did to set things up. As an example I&rsquo;ve added the commands to get things going in Ubuntu, but it could work with any Linux ofcourse.</p>
+<p>1 - Install zsh</p>
+<pre tabindex="0"><code>sudo apt-get install zsh
+</code></pre><p>2 - Install zplug</p>
+<pre tabindex="0"><code>curl -sL zplug.sh/installer | zsh
+</code></pre><p>3 - Install Powerline fonts</p>
+<pre tabindex="0"><code>mkdir ~/powerline-fonts
+cd ~/powerline-fonts
+git clone https://github.com/powerline/fonts.git .
+./install.sh
+</code></pre><p>4 - Select a powerline font in terminal settings. In Ubuntu, open a terminal using CTRL-ALT-T. In menu go to Edit-&gt;Profile Preferences. On tab General, select a Powerline &ldquo;Custom font&rdquo; (has Powerline in it&rsquo;s name).
+<figure><img src="http://localhost:1313/img/terminal-settings.png"
+    alt="Terminal settings">
+</figure>
+</p>
+<p>5 - Edit <code>.zshrc</code> (which is what <code>.bashrc</code> is for Bash) to your liking. See below what mine looks like currently. Note that <code>ZSH_THEME</code> sets the theme to be used with zplug and <code>DEFAULT_USER</code> hides the user name from showing in every line on the commandline when logged in as the default user.</p>
+<pre tabindex="0"><code>DEFAULT_USER=daan
+ZSH_THEME=agnoster
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+# Paths
+export EDITOR=atom
+
+# Aliases
+# Some more basic aliases
+alias ll=&#39;ls -lh&#39;
+alias la=&#39;ls -lAh&#39;
+alias l=&#39;ls -lah&#39;
+alias md=&#39;mkdir -p&#39;
+alias rd=&#39;rmdir&#39;
+alias cd..=&#39;cd ..&#39;
+alias cd...=&#39;cd ../..&#39;
+alias cd....=&#39;cd ../../..&#39;
+alias cd.....=&#39;cd ../../../..&#39;
+alias cd......=&#39;cd ../../../../..&#39;
+alias ..=&#39;cd ..&#39;
+alias ...=&#39;cd ../..&#39;
+alias ....=&#39;cd ../../..&#39;
+alias .....=&#39;cd ../../../..&#39;
+alias ......=&#39;cd ../../../../..&#39;
+
+##############################
+# Zplug
+##############################
+
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh &amp;&amp; zplug update --self
+fi
+
+# Essential
+source ~/.zplug/init.zsh
+
+# Zplug plugins
+zplug &#34;zplug/zplug&#34;
+zplug &#34;zsh-users/zsh-completions&#34;
+zplug &#34;zsh-users/zsh-syntax-highlighting&#34;
+zplug &#34;zsh-users/zsh-history-substring-search&#34;
+zplug &#34;rimraf/k&#34;
+zplug &#34;b4b4r07/enhancd&#34;, use:init.sh
+zplug &#39;plugins/git&#39;, from:oh-my-zsh
+zplug &#34;themes/agnoster&#34;, from:oh-my-zsh
+
+# Install packages that have not been installed yet
+if ! zplug check --verbose; then
+    printf &#34;Install? [y/N]: &#34;
+    if read -q; then
+        echo; zplug install
+    else
+        echo
+    fi
+fi
+
+zplug load --verbose
+
+[ -f ~/.fzf.zsh ] &amp;&amp; source ~/.fzf.zsh
+</code></pre><p>6 - Set ZSH as default shell</p>
+<pre tabindex="0"><code>chsh -s /bin/zsh
+</code></pre><p>7 - Restart terminal. It might be necessary to restart Ubuntu.</p>
+<p>Hope you enjoyed reading this, have a nice day!</p>
+
+      </div>
+    </article>
+
+    
+      <section class="dh-shell dh-section-block">
+        <div class="dh-section-heading">
+          <div>
+            <p class="dh-kicker">Continue reading</p>
+            <h2>More archive posts</h2>
+          </div>
+        </div>
+
+        <div class="dh-post-list dh-post-list-compact">
+          
+            <article class="dh-post-card">
+              <p class="dh-meta">Jan 17, 2016</p>
+              <h3><a href="http://localhost:1313/post/jenkins-workflow/">Getting real with Jenkins Workflow</a></h3>
+              <p>Why I love Jenkins Workflow</p>
+            </article>
+          
+            <article class="dh-post-card">
+              <p class="dh-meta">Dec 23, 2015</p>
+              <h3><a href="http://localhost:1313/post/mysite/">Building a blog using Hugo, GitHub, Digital Ocean and Docker</a></h3>
+              <p>How I build this site</p>
+            </article>
+          
+        </div>
+      </section>
+    
+
+    <section class="dh-shell dh-section-block dh-contact-strip">
+      <div>
+        <p class="dh-kicker">Stay in touch</p>
+        <h2>Prefer reading in a feed or talking directly?</h2>
+        <p>Subscribe, keep reading, or reach out when the work matches what you're trying to change.</p>
+      </div>
+      <div class="dh-link-cluster">
+        <a class="dh-text-link" href="http://localhost:1313/writing/">All writing</a>
+        <a class="dh-text-link" href="http://localhost:1313/index.xml">RSS</a>
+        <a class="dh-text-link" href="https://www.linkedin.com/in/daanhorn/">LinkedIn</a>
+        <a class="dh-button" href="mailto:daanhornnl@gmail.com">Email</a>
+      </div>
+    </section>
+  </main>
+
+
+  <footer class="dh-site-footer">
+    <div class="dh-shell dh-footer-shell">
+      <div>
+        <p class="dh-footer-title">Daan Horn</p>
+        <p class="dh-footer-copy">Thoughtful writing on engineering productivity, modern ways of working, and AI in software engineering.</p>
+      </div>
+
+      <nav class="dh-footer-links" aria-label="Footer links">
+        <a href="mailto:daanhornnl@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/daanhorn/">LinkedIn</a>
+        <a href="http://localhost:1313/index.xml">RSS</a>
+        
+          <span>Newsletter coming soon</span>
+        
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
+

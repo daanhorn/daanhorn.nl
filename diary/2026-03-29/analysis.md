@@ -333,3 +333,547 @@ Let's create a concrete sitemap and low-fidelity wireframes"
 ### Technical details
 - The sitemap chooses explicit public routes for primary surfaces and leaves newsletter as a capability rather than a page type.
 - The wireframes include both desktop and mobile stacking behavior to prevent a desktop-only IA from slipping into implementation.
+
+## Step 6: Implement The New Hugo Structure
+
+This step turned the PRD and wireframes into actual Hugo templates, content structure, and styling. The goal was not to finish every piece of copy or integration, but to replace the legacy blog defaults with the new site architecture: a custom homepage, a new writing section, an explicit contact page, and a hidden archive path for older posts.
+
+The implementation deliberately kept the existing Hugo and DigitalOcean-compatible static setup while changing the project-level overrides that shape the experience. That means the site now behaves like the planned editorial personal website even before any final content or newsletter provider is selected.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+Start implementing the Hugo templates from this structure"
+
+**Assistant interpretation:** Begin translating the approved sitemap and wireframes into concrete Hugo templates, content routes, and styling inside the existing site.
+
+**Inferred user intent:** Move from planning into working implementation while preserving the validated product direction.
+
+### What I did
+- Updated `/home/daan/Repos/daanhorn.nl/site/config.toml` to rename the site to `Daan Horn`, remove taxonomy pages, define the new menu, and add site copy/config values for the homepage and archive.
+- Rewrote `/home/daan/Repos/daanhorn.nl/site/layouts/partials/header.html` and added `/home/daan/Repos/daanhorn.nl/site/layouts/partials/footer.html` to replace the theme-driven chrome with a custom navigation and footer matching the new IA.
+- Replaced `/home/daan/Repos/daanhorn.nl/site/layouts/index.html` with a custom landing page built from the new homepage structure.
+- Replaced `/home/daan/Repos/daanhorn.nl/site/layouts/_default/single.html` so articles in the `writing` and `post` sections render with the new editorial layout and soft CTA block.
+- Added `/home/daan/Repos/daanhorn.nl/site/layouts/writing/section.html` for the new writing index.
+- Added `/home/daan/Repos/daanhorn.nl/site/layouts/post/section.html` so the legacy `/post/` route behaves as an archive.
+- Added `/home/daan/Repos/daanhorn.nl/site/layouts/archive-page/single.html` and `/home/daan/Repos/daanhorn.nl/site/content/archive.md` to implement the hidden archive page at `/archive/`.
+- Added `/home/daan/Repos/daanhorn.nl/site/layouts/contact/single.html` and updated `/home/daan/Repos/daanhorn.nl/site/content/contact.md` for the new direct-contact experience.
+- Added `/home/daan/Repos/daanhorn.nl/site/content/writing/_index.md` to establish the new writing section.
+- Added `/home/daan/Repos/daanhorn.nl/site/content/post/_index.md` so the legacy section identifies itself as `Archive` rather than `Posts`.
+- Added `/home/daan/Repos/daanhorn.nl/site/layouts/404.html` to replace the stale theme 404 page.
+- Added `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` with the new minimal editorial styling layer.
+- Removed `/home/daan/Repos/daanhorn.nl/site/layouts/_default/archive.html` because it conflicted with the hidden archive route.
+- Removed the old `about` page from navigation by editing `/home/daan/Repos/daanhorn.nl/site/content/about.md`.
+- Verified the build repeatedly with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build`.
+
+### Why
+- The site needed custom project-level templates instead of more theme tweaking, because the required information architecture and page hierarchy differ fundamentally from the old blog shell.
+- Building the hidden archive as an explicit page kept legacy content accessible without letting Hugo’s older template conventions leak into the new experience.
+
+### What worked
+- The site now renders a custom homepage, writing index, contact page, archive page, legacy archive listing, and custom 404 page.
+- The top-level navigation is reduced to `Writing` and `Contact`, with the brand linking home.
+- The new writing section is structurally ready even though it does not yet contain published essays.
+- Legacy posts remain accessible and are framed as archive material rather than current positioning.
+- The site builds successfully into a clean temporary destination.
+
+### What didn't work
+- The first attempt to build `/archive/` as an empty section conflicted with the legacy `/home/daan/Repos/daanhorn.nl/site/layouts/_default/archive.html` view file, producing the wrong output.
+- Hugo also left stale files in the temporary destination until the build switched to `--cleanDestinationDir`, which briefly made the archive debugging look worse than it was.
+
+### What I learned
+- In this codebase, replacing the project overrides is enough to redirect the site away from the theme’s original assumptions.
+- A hidden archive route is simpler and more reliable as a normal page with an explicit template than as an empty section that depends on fallback lookup behavior.
+
+### What was tricky to build
+- The biggest sharp edge was Hugo template lookup. The legacy `_default/archive.html` file looked like an innocuous render view from the old theme override, but it collided with the intended archive route and had to be removed.
+- Another tricky point was preserving old content access while still making the public structure feel new. That required treating `/post/` as an archive surface and creating a separate `/archive/` page without surfacing either one in the main navigation.
+
+### What warrants a second pair of eyes
+- The homepage content blocks are structurally correct, but they still use provisional copy from config values and should be reviewed once final voice and messaging are drafted.
+- The custom CSS establishes the visual direction, but it should be reviewed in a browser for spacing, typography, and responsive polish before treating the design as final.
+- The newsletter and analytics placeholders are intentionally incomplete and still need provider-specific implementation.
+
+### What should be done in the future
+- Add the first real essays under the new `writing` section so the homepage and writing index can render live content instead of empty-state messaging.
+- Choose and implement a privacy-friendly analytics solution.
+- Choose and implement the newsletter flow.
+- Refine homepage and contact copy once the final tone is approved.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/site/layouts/index.html`, `/home/daan/Repos/daanhorn.nl/site/layouts/_default/single.html`, and `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css`.
+- Then review `/home/daan/Repos/daanhorn.nl/site/config.toml`, `/home/daan/Repos/daanhorn.nl/site/layouts/partials/header.html`, and `/home/daan/Repos/daanhorn.nl/site/layouts/partials/footer.html` to understand the new shared structure.
+- Validate with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` from `/home/daan/Repos/daanhorn.nl/site`.
+
+### Technical details
+- The new content model separates `writing` for current essays and `post` for legacy archive material.
+- The hidden archive route is implemented as `/home/daan/Repos/daanhorn.nl/site/content/archive.md` with type `archive-page`, rendered by `/home/daan/Repos/daanhorn.nl/site/layouts/archive-page/single.html`.
+- The legacy `about` page still exists, but it is no longer promoted in navigation.
+
+## Step 7: Refine Homepage And Contact Copy
+
+With the structure in place, the next step was to improve the voice of the homepage and contact page so they feel more deliberate and less like placeholder implementation text. The emphasis here was not on adding more copy, but on making the existing sections sound clearer, more current, and more aligned with the positioning work from the PRD.
+
+This mainly meant tightening the homepage framing around modernization, making the perspective and background blocks sound more specific, and making the contact page feel direct and low-friction. It also included a tiny template-level cleanup so the displayed LinkedIn value looked human-readable instead of like a raw URL dump.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+Let's refine the homepage and contact copy"
+
+**Assistant interpretation:** Improve the writing on the homepage and contact page now that the Hugo structure exists, without changing the overall page layout.
+
+**Inferred user intent:** Make the site sound more thoughtful, credible, and intentional before moving further into polish or additional implementation.
+
+### What I did
+- Updated homepage copy values in `/home/daan/Repos/daanhorn.nl/site/config.toml`, including the site description, hero text, intro section, background section, and homepage contact prompt.
+- Updated `/home/daan/Repos/daanhorn.nl/site/content/contact.md` to make the contact page more direct and specific.
+- Updated `/home/daan/Repos/daanhorn.nl/site/layouts/index.html` to tighten one hardcoded homepage CTA heading.
+- Updated `/home/daan/Repos/daanhorn.nl/site/layouts/contact/single.html` so the visible LinkedIn label is rendered as a clean display string instead of the full raw URL.
+- Rebuilt the site with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` and spot-checked the rendered homepage and contact page.
+
+### Why
+- Structural work gets the site into the right shape, but copy is what actually delivers positioning.
+- The initial implementation copy was functional, but it still sounded like a first pass rather than a confident editorial voice.
+
+### What worked
+- The hero and supporting copy now sound more active and intentional.
+- The homepage perspective block now better connects engineering productivity, organizational change, and AI without sounding like a list of buzzwords.
+- The contact page is shorter, clearer, and more aligned with the “soft CTA” goal.
+- The visible LinkedIn value on the contact page is now readable as `www.linkedin.com/in/daanhorn`.
+
+### What didn't work
+- The first attempt to shorten the LinkedIn display value used Hugo template pipelines incorrectly and produced a garbled repeated string instead of a cleaned URL.
+
+### What I learned
+- Copy refinement at this stage is most effective when it sharpens intent, not when it adds more sections or more claims.
+- Hugo template pipelines can be easy to misread because the piped value becomes the final argument, which matters for string replacement helpers.
+
+### What was tricky to build
+- The main tricky part was the LinkedIn display formatting bug: the templating logic looked correct at a glance, but Hugo’s pipeline argument order turned the replacement chain into nonsense output. The fix was to use explicit nested function calls instead of relying on pipeline shorthand.
+- On the content side, the challenge was making the writing sound stronger without overplaying the advisory angle or slipping into generic consultancy language.
+
+### What warrants a second pair of eyes
+- The homepage copy should still be reviewed once the first real essays exist, because the strongest homepage language often emerges in relation to actual article titles and topics.
+- The contact page may want one final pass after the dedicated contact email is chosen.
+
+### What should be done in the future
+- Add real writing under the `writing` section so homepage copy and article previews can reinforce each other.
+- Revisit the homepage one more time once newsletter and analytics choices are in place, in case the CTA wording should shift slightly.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/site/config.toml` for the content changes.
+- Then review `/home/daan/Repos/daanhorn.nl/site/content/contact.md`, `/home/daan/Repos/daanhorn.nl/site/layouts/index.html`, and `/home/daan/Repos/daanhorn.nl/site/layouts/contact/single.html`.
+- Validate with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` and inspect the rendered homepage and contact page.
+
+### Technical details
+- The LinkedIn display fix uses nested `replace` and `replaceRE` calls in the contact template to strip the protocol and trailing slash safely.
+- The homepage copy remains config-driven so it can be refined without editing template structure again.
+
+## Step 8: Refresh The Visual System
+
+The next step addressed the visual tone of the site. The structure and copy were in a much better place, but the color palette and surface treatment still felt muted and old-fashioned. The goal of this pass was to make the website feel like a modern tech publication: cleaner contrast, stronger accent colors, more layered backgrounds, and more intentional motion and hierarchy.
+
+This was done entirely in the custom CSS layer so the underlying Hugo templates could stay stable. That kept the change focused: make the site look current and sharper without reopening the content model or layout decisions.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+The color scheme of the website is a bit boring and looking old. Make it look like a modern tech website"
+
+**Assistant interpretation:** Modernize the visual design by reworking the palette and component styling while preserving the current page structure.
+
+**Inferred user intent:** Make the site feel visually contemporary and technology-forward, not soft, dated, or generic.
+
+### What I did
+- Reworked `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` to replace the muted beige/green editorial palette with a brighter blue/cyan/teal tech palette.
+- Added layered radial gradients and subtle grid overlays to the page background.
+- Turned the homepage hero into a darker, more dramatic gradient panel with glowing accents and a grid motif.
+- Updated the typography treatment for headings and navigation so the UI reads more like a modern tech site than a classic blog.
+- Added more deliberate surface styling to cards, post previews, CTA sections, article shells, and contact methods.
+- Restyled the contact strip and footer so they feel more intentional and less theme-derived.
+- Rebuilt the site with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` to verify the CSS changes did not break the build.
+
+### Why
+- The previous palette and surface treatment supported readability, but they did not communicate the sharper, more contemporary identity the refreshed site is aiming for.
+- Styling this in the custom CSS layer allowed a large visual change with minimal risk to routing, templates, and content logic.
+
+### What worked
+- The site now has a clearer visual direction: bright tech accents, stronger contrast, and more energetic depth.
+- The hero feels meaningfully differentiated from the rest of the page rather than like another lightly tinted panel.
+- Post cards, contact cards, and CTA areas now feel more interactive and modern without adding unnecessary UI complexity.
+
+### What didn't work
+- N/A
+
+### What I learned
+- The fastest way to change the character of this site was not more layout work but a stronger system of colors, surfaces, and type treatment.
+- A mostly light site can still feel “tech” if the accents, contrast, and background structure are intentional enough.
+
+### What was tricky to build
+- The main challenge was making the site feel more modern and technical without defaulting to a generic all-dark startup aesthetic. The solution was to keep the overall site light, then use a dark high-contrast hero, stronger blue/cyan accents, and more structured surface styling.
+- Another subtle point was making sure the new visual treatment still works with the long-form article layout and does not overpower the reading experience.
+
+### What warrants a second pair of eyes
+- The new visual system should be reviewed in a browser on both desktop and mobile to validate spacing, readability, and how the hero overlap behaves responsively.
+- Once real writing exists in the `writing` section, card density and accent strength should be rechecked against actual content volume.
+
+### What should be done in the future
+- Review the site visually in-browser and tune spacing or color intensity if needed.
+- Add the first real essays so the refreshed visual system can be evaluated with live content rather than empty states.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` because this step is almost entirely a visual-system change.
+- Cross-check `/home/daan/Repos/daanhorn.nl/site/layouts/index.html` and `/home/daan/Repos/daanhorn.nl/site/layouts/_default/single.html` only to understand where the styled components are used.
+- Validate with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build`.
+
+### Technical details
+- The new palette is driven by updated CSS custom properties rather than ad hoc color replacements.
+- The body and hero use layered gradients and subtle grid effects implemented in CSS only.
+- Interactive components such as post cards and contact methods now have hover transitions to make the site feel more current without adding JavaScript.
+
+## Step 9: Shift The Tech Palette To Green And Match The Favicon
+
+This step kept the modern tech visual direction from the previous pass, but swapped the cooler blue palette for a greener brand system. The change was not just cosmetic in the hero; it flowed through the backgrounds, borders, hover states, and accent treatments so the site now feels consistently green rather than partially green and partially blue.
+
+Because the browser tab icon is part of the brand surface too, I also updated the favicon to match the new palette. That included a new SVG favicon plus a generated `.ico` fallback so the site stays consistent across browsers.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+Replace the shades of blue with shades of green. Also adjust favicon to match the green."
+
+**Assistant interpretation:** Convert the modern tech palette from blue to green and update the favicon assets so the browser chrome matches the refreshed site.
+
+**Inferred user intent:** Keep the newer visual system, but align it with a greener brand direction throughout both the page UI and the favicon.
+
+### What I did
+- Updated `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` to replace the blue-driven palette with green and emerald tones across variables, gradients, borders, accents, and hover states.
+- Updated `/home/daan/Repos/daanhorn.nl/site/layouts/partials/header.html` to prefer an SVG favicon while retaining `.ico` fallback support.
+- Added `/home/daan/Repos/daanhorn.nl/site/static/favicon.svg` as a green favicon asset matching the refreshed visual direction.
+- Regenerated `/home/daan/Repos/daanhorn.nl/site/static/favicon.ico` from the SVG with `magick -background none site/static/favicon.svg -define icon:auto-resize=256,128,64,48,32,16 site/static/favicon.ico`.
+- Verified there were no remaining blue palette tokens in the custom CSS layer.
+- Rebuilt the site with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build`.
+
+### Why
+- The user preferred the updated visual system but wanted a greener identity.
+- Updating the favicon at the same time keeps the site coherent in browser tabs, bookmarks, and saved shortcuts.
+
+### What worked
+- The site now uses green accents consistently in place of the previous blue system.
+- The rendered HTML now references both `favicon.svg` and `favicon.ico`.
+- The `.ico` fallback now contains multiple icon sizes generated from the new green SVG source.
+
+### What didn't work
+- N/A
+
+### What I learned
+- Once the visual system was already organized around CSS custom properties, changing the brand direction from blue to green became straightforward and low-risk.
+- A dedicated SVG source file makes favicon updates much easier because the `.ico` fallback can be regenerated from a single canonical asset.
+
+### What was tricky to build
+- The main nuance was making sure the site felt consistently green rather than just replacing the most obvious accent colors. That required updating not only variables, but also hardcoded gradient and shadow values introduced in the previous modern-tech pass.
+- The favicon work was straightforward because `magick` was available locally, but it still required checking the generated `.ico` format and making sure the HTML referenced the new SVG first.
+
+### What warrants a second pair of eyes
+- The new green palette should be reviewed in a browser to ensure contrast and saturation still feel balanced across the hero, cards, and footer.
+- The favicon should be checked in an actual browser tab, since rendered tab icons can look different from the full-size SVG source.
+
+### What should be done in the future
+- Review the green palette against live content once the first `writing` posts are added.
+- If the dedicated contact email or newsletter provider introduces their own branding, ensure they still fit the green system.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` for the palette changes.
+- Then review `/home/daan/Repos/daanhorn.nl/site/static/favicon.svg`, `/home/daan/Repos/daanhorn.nl/site/static/favicon.ico`, and `/home/daan/Repos/daanhorn.nl/site/layouts/partials/header.html`.
+- Validate with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` and inspect the generated favicon references in `/tmp/daanhorn-refresh-build/index.html`.
+
+### Technical details
+- The favicon fallback was generated with ImageMagick `magick` and includes multiple icon sizes.
+- The build output confirms the generated site now includes both `/favicon.svg` and `/favicon.ico`.
+
+## Step 10: Push The Green Palette Further Into Lime-Tech
+
+The previous green pass moved the site away from blue, but it still read as emerald rather than lime. This step pushed the visual system further into a brighter chartreuse/lime direction so the site feels more intentionally “lime-tech” instead of just “green tech.”
+
+The change affected both the site palette and the favicon again. The idea was to keep the overall visual system intact while increasing the brightness and edge of the accent colors so the site reads as more energetic and more visibly distinct.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+Make it more lime-tech"
+
+**Assistant interpretation:** Push the existing green visual system toward brighter lime/chartreuse tones and ensure the favicon follows that stronger direction.
+
+**Inferred user intent:** Keep the modern tech look, but make the green identity more vivid, more neon, and less conventional.
+
+### What I did
+- Updated `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` again to shift the palette from emerald green to brighter lime/chartreuse values.
+- Adjusted the body gradients, hero gradients, card highlights, border accents, empty states, CTA surfaces, blockquotes, code blocks, and hover states to use the new lime palette.
+- Updated `/home/daan/Repos/daanhorn.nl/site/static/favicon.svg` so the favicon uses the same darker-olive-to-lime gradient family.
+- Regenerated `/home/daan/Repos/daanhorn.nl/site/static/favicon.ico` from the updated SVG.
+- Rebuilt the site with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` and confirmed the expected lime tokens were present in the CSS and favicon source.
+
+### Why
+- The earlier green pass solved the “not blue” requirement, but it did not go far enough toward the sharper lime-tech feel the user wanted.
+- The favicon had to be updated again because the stronger palette direction would otherwise leave the browser icon behind visually.
+
+### What worked
+- The site now uses much brighter lime/chartreuse accents instead of safer emerald tones.
+- The hero and CTA areas now feel more electric and obviously differentiated.
+- The favicon now visually matches the more aggressive lime palette.
+
+### What didn't work
+- N/A
+
+### What I learned
+- Once the palette system is centralized in CSS custom properties and repeated gradient values, a brand-tone shift like “green” to “lime-tech” is still a focused change rather than a redesign from scratch.
+- Small hue shifts can materially change the perceived personality of a site, especially in the hero, CTA sections, and favicon.
+
+### What was tricky to build
+- The main nuance was pushing toward lime without accidentally making the site look cheap or unreadable. That required keeping the structural contrast intact while using the brighter accents mainly in gradients, glows, and emphasis points.
+- The favicon update needed the same care, because lime works very differently at favicon scale than at full-page scale.
+
+### What warrants a second pair of eyes
+- The stronger lime palette should be reviewed in a browser to make sure it still feels intentional rather than oversaturated, especially on high-brightness displays.
+- The favicon should be checked in a real tab and bookmark bar because tiny icons can exaggerate bright colors.
+
+### What should be done in the future
+- Review the site visually in-browser and decide whether the lime should stay this bold or be dialed back slightly.
+- Re-evaluate the accent intensity once real writing content is present.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` for the palette refinement.
+- Then review `/home/daan/Repos/daanhorn.nl/site/static/favicon.svg` and `/home/daan/Repos/daanhorn.nl/site/static/favicon.ico`.
+- Validate with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` and inspect the generated HTML plus favicon files in `/tmp/daanhorn-refresh-build`.
+
+### Technical details
+- The updated lime values are centered around `#97ff3f` and `#dcff72` in the CSS and favicon source.
+- The `.ico` fallback was regenerated after the SVG update using ImageMagick `magick`.
+
+## Step 11: Improve Contrast For Lime Accent Text And Button Labels
+
+After pushing the palette toward lime-tech, the remaining issue was readability: the bright lime accent worked well for glows and fills, but not for small labels sitting on light surfaces. The “Perspective”, “Background”, and “Latest writing” labels were all using the bright accent directly, and the `Contact me` button text was competing with a very bright button background.
+
+This step was a targeted contrast pass rather than another palette redesign. The goal was to keep the lime-tech look while moving small text and button labeling onto darker ink values that are much easier to read.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+I like the background colors, only now \"Perspective\", \"Background\" and \"Latest writing\" are now really hard to read. Same goes for the \"Contact Me\" button"
+
+**Assistant interpretation:** Preserve the new palette and background treatment, but improve local contrast for the small section labels and the CTA button.
+
+**Inferred user intent:** Keep the visual direction, but make the key UI text readable again.
+
+### What I did
+- Updated `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` to introduce darker lime-ink variables for readable accent text.
+- Switched `.dh-kicker` from the bright lime accent to a darker olive/lime ink color.
+- Switched hover and text-link states on light backgrounds to the darker accent ink values.
+- Changed the `Contact me` button text color from near-white to a dark ink color and slightly increased its weight.
+- Rebuilt the site with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` and verified the generated CSS reflects the new contrast-focused values.
+
+### Why
+- Bright lime can work well as a glow or fill color but is often too light for small text on pale backgrounds.
+- This kind of issue is best solved by separating “brand accent for surfaces” from “brand accent for text.”
+
+### What worked
+- The small labels now use darker ink values while the rest of the lime palette stays intact.
+- The `Contact me` button now has much stronger label contrast against the bright lime background.
+- The visual system still reads as lime-tech instead of reverting to a safer darker green style.
+
+### What didn't work
+- N/A
+
+### What I learned
+- In bright accent systems, using one accent color for both decorative surfaces and small text almost always creates contrast problems.
+- A separate “accent ink” token is a simple way to preserve the brand hue family while making the interface readable.
+
+### What was tricky to build
+- The subtle challenge was fixing the readability problem without flattening the personality of the palette. Using darker lime-ink values for text solved that while leaving the brighter lime colors available for gradients, glows, and surface emphasis.
+
+### What warrants a second pair of eyes
+- The updated contrast should still be reviewed visually in a browser, especially on displays with different brightness and color profiles.
+- Once the first real writing posts exist, it will be worth checking whether any other small accent text should adopt the same darker ink treatment.
+
+### What should be done in the future
+- Continue testing the lime palette against real content and adjust any remaining low-contrast microcopy if it appears.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css`, focusing on `.dh-kicker`, `.dh-button`, `.dh-text-link`, and the new accent ink variables.
+- Validate with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build`.
+
+### Technical details
+- This step introduced darker text-oriented accent tokens while leaving the bright lime tokens in place for fills and gradients.
+
+## Step 12: Reduce The Hero Footprint
+
+The remaining issue after the color work was not about palette but about page balance: the homepage hero was still too dominant when the site first opened. The headline itself was fine, but its sizing, forced wrapping, and padding made the hero consume too much of the initial viewport.
+
+This step was a layout-tuning pass, not a content rewrite. The goal was to preserve the same opening message while making the first screen feel more balanced and less like a giant billboard.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+Just make the hero less prominent and space consuming"
+
+**Assistant interpretation:** Keep the existing hero copy and visual direction, but reduce its vertical footprint and visual dominance.
+
+**Inferred user intent:** Make the homepage feel more balanced on first load without losing the core positioning statement.
+
+### What I did
+- Updated `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` to reduce the hero padding.
+- Reduced the decorative glow and grid panel size inside the hero.
+- Reduced the hero headline size and allowed it to span a wider measure so it wraps less aggressively.
+- Reduced the hero subtitle size and widened its measure slightly.
+- Reduced the negative overlap between the hero and the cards below it so the opening composition feels calmer.
+- Rebuilt the site with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` and verified the generated CSS reflects the intended changes.
+
+### Why
+- The problem was primarily layout density and typographic scale, not wording.
+- Adjusting the hero in CSS is the smallest clean change because it preserves the content model and the approved copy while improving the first impression.
+
+### What worked
+- The hero now takes up less vertical space.
+- The headline should wrap into fewer lines because the measure is wider and the font size is slightly reduced.
+- The decorative elements still support the visual direction but no longer compete as strongly with the message.
+
+### What didn't work
+- N/A
+
+### What I learned
+- The perceived size of a hero is often driven as much by measure and wrapping as by font size alone.
+- Reducing overlap and decoration can make a layout feel calmer even when the core content remains unchanged.
+
+### What was tricky to build
+- The main subtlety was reducing the hero’s dominance without making it feel generic or underpowered. The solution was to change several small things together: padding, headline scale, line length, subtitle scale, and decorative panel size.
+
+### What warrants a second pair of eyes
+- The updated hero should be checked in a browser on both desktop and mobile, since the balance between headline size and wrapping is best judged visually.
+
+### What should be done in the future
+- If the hero still feels too large after browser review, the next step would be to shorten the headline itself rather than compress the layout further.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css`, focusing on `.dh-hero`, `.dh-hero::before`, `.dh-hero::after`, `.dh-hero h1`, `.dh-hero .dh-lead`, and `.dh-grid-two`.
+- Validate with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build`.
+
+### Technical details
+- This step was implemented entirely in CSS; no template or content changes were required.
+
+## Step 13: Align The Footer And Brand Mark With The Lime System
+
+The next visual inconsistency was that the footer still carried an old dark-blue gradient, which no longer fit the lime/green system used throughout the rest of the site. At the same time, the `Daan Horn.` mark in the top-left was still fairly subdued compared to the rest of the refreshed visual language.
+
+This step corrected both of those issues as a focused polish pass. The footer was brought into the lime/green family, and the brand mark was given a more colorful gradient treatment so it feels more intentional without changing the layout.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+The blue footer doesn't match the color scheme. \"Daan Horn.\" on the top-left of the page could be more colorful"
+
+**Assistant interpretation:** Bring the footer into the same green/lime palette and make the brand mark more visually distinctive.
+
+**Inferred user intent:** Remove the remaining leftover blue styling and make the site identity feel more cohesive and polished.
+
+### What I did
+- Updated `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` to replace the footer’s old dark-blue gradient with a darker green/lime-aware gradient and matching footer text colors.
+- Updated the `.dh-brand` styling in the same CSS file to use a gradient text treatment.
+- Adjusted the `Daan Horn.` trailing dot so it remains bright and intentional.
+- Rebuilt the site with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build` and verified the generated CSS reflects the new footer and brand styling.
+
+### Why
+- The footer was one of the last visible remnants of the earlier blue palette.
+- The top-left site mark is a constant piece of the interface, so giving it more personality improves the perceived polish of the whole site.
+
+### What worked
+- The footer now visually belongs to the same lime/green palette as the rest of the site.
+- The site mark now has a more colorful, branded feel without needing a separate logo asset.
+
+### What didn't work
+- N/A
+
+### What I learned
+- Small, persistent UI elements like the brand mark and footer often matter as much as large hero sections when making a design feel cohesive.
+
+### What was tricky to build
+- The main subtlety was making the top-left brand more colorful without making it look like a gimmick. A restrained gradient plus a brighter dot preserved readability while adding personality.
+
+### What warrants a second pair of eyes
+- The gradient text treatment for the brand should be checked in-browser across browsers, since text clipping can render slightly differently depending on the engine.
+
+### What should be done in the future
+- If a custom wordmark or logo is ever introduced, it should be evaluated against this gradient-text treatment and replace it only if it is clearly stronger.
+
+### Code review instructions
+- Start with `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css`, focusing on `.dh-brand`, `.dh-brand::after`, `.dh-site-footer`, `.dh-footer-links`, and `.dh-footer-title`.
+- Validate with `hugo --cleanDestinationDir -d /tmp/daanhorn-refresh-build`.
+
+### Technical details
+- This step was implemented entirely in CSS and did not require template changes.
+
+## Step 14: Simplify The Brand Mark Color Treatment
+
+The previous polish pass made the `Daan Horn.` mark more colorful with a gradient treatment, but the follow-up preference was simpler: keep the wordmark itself a dark green and let only the trailing dot carry a medium green accent. This keeps some personality while making the brand mark calmer and cleaner.
+
+This was a very small visual adjustment, but it matters because the top-left brand is always visible. A simpler treatment helps it feel more intentional and less decorative.
+
+### Prompt Context
+
+**User prompt (verbatim):** "# User State
+
+
+Remove the gradient from \"Daan Horn.\". Make it dark green with the dot being medium green"
+
+**Assistant interpretation:** Replace the gradient wordmark with a solid dark-green wordmark and a medium-green dot.
+
+**Inferred user intent:** Keep the brand mark aligned with the green palette, but make it visually cleaner and less flashy.
+
+### What I did
+- Updated `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css` to remove the gradient text treatment from `.dh-brand`.
+- Set the main brand text to a solid dark green.
+- Set the trailing dot in `.dh-brand::after` to a medium green.
+
+### Why
+- The simpler treatment better fits the user’s preference while still keeping a subtle accent in the brand mark.
+
+### What worked
+- The brand mark now reads more cleanly and consistently.
+- The dot still provides a little color without the whole wordmark needing a gradient.
+
+### What didn't work
+- N/A
+
+### What I learned
+- Small branding details often benefit from restraint, especially when the rest of the page already carries a strong visual language.
+
+### What was tricky to build
+- N/A
+
+### What warrants a second pair of eyes
+- The wordmark should be checked in the browser once more to confirm the dark green is distinct enough against the pale header background.
+
+### What should be done in the future
+- N/A
+
+### Code review instructions
+- Review `/home/daan/Repos/daanhorn.nl/site/static/css/custom.css`, focusing on `.dh-brand` and `.dh-brand::after`.
+
+### Technical details
+- This was a CSS-only change.

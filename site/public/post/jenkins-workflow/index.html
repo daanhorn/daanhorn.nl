@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  
+    
+  
+  
+  
+    
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Why I love Jenkins Workflow">
+  <meta name="author" content="Daan Horn">
+
+  <title>Getting real with Jenkins Workflow | Daan Horn</title>
+
+  <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  
+
+  <link href="http://localhost:1313/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:1313/css/clean-blog.min.css" rel="stylesheet">
+  <link href="http://localhost:1313/css/custom.css" rel="stylesheet">
+</head>
+
+<body class="dh-body dh-section-page dh-section-post">
+  <header class="dh-site-header">
+    <div class="dh-shell dh-nav-shell">
+      <a class="dh-brand" href="http://localhost:1313/">Daan Horn</a>
+      <nav class="dh-nav" aria-label="Primary navigation">
+        
+          
+          <a class="dh-nav-link" href="http://localhost:1313/writing/">Writing</a>
+        
+          
+          <a class="dh-nav-link" href="http://localhost:1313/contact/">Contact</a>
+        
+      </nav>
+    </div>
+  </header>
+
+
+
+  
+
+  <main class="dh-main">
+    <article class="dh-shell dh-article-shell">
+      <header class="dh-article-header">
+        <p class="dh-kicker">Archive</p>
+        <h1>Getting real with Jenkins Workflow</h1>
+        <p class="dh-lead">Why I love Jenkins Workflow</p>
+        <p class="dh-meta">Jan 17, 2016</p>
+      </header>
+
+      <div class="dh-prose">
+        <p>Nowadays many CI solutions exists. And in last few years many new came to town, like Travis CI, Codeship and CircleCI. But I still think that Jenkins is a good choice as CI server. While it may not be the most straight forward solution, leaving you with many choices to maken, it does support a really wide selection of tooling and has plugins for many.
+Unfortunately, Jenkins was missing on something. Something that all tools were missing actually&hellip; Really good support for Continuous Delivery pipelines!
+In this article I talk about pipelines, workflows and flows. By these I really mean the same thing, an orchestration of (Jenkins) jobs to be executed.</p>
+<h2 id="what-was-missing">What was missing?</h2>
+<p>So what exactly was it that was missing in Jenkins?</p>
+<h3 id="central-defined-pipeline">Central defined pipeline</h3>
+<p><strong>Before: Pipeline defined across all jobs</strong><br>
+There was just no way of defining a pipeline in a single location. This means changing the flow of a pipeline requires changes in many places.<br>
+<strong>Jenkins Workflow: A single Groovy file</strong><br>
+This is being solved by defining the entire pipeline in a single Groovy (Jenkins)file. Changing this is easy.</p>
+<h3 id="high-level-abstractions">High level abstractions</h3>
+<p><strong>Before: Jobs as abstractions</strong><br>
+As there was no way of defining abstractions in your Jenkins pipeline, the way abstractions we implemented used just a job for these abstraction, like a <code>multijob</code> or some custom scripting job.<br>
+<strong>Jenkins Workflow: Stages</strong> <br>
+By using stages, it is really easy to wrap parts of your pipeline in a stage. E.g.:</p>
+<pre tabindex="0"><code>stage &#39;build&#39;
+  node{ ... }
+stage name: &#39;test&#39;, concurrency: 3
+  node{ ... }
+stage name: &#39;deploy&#39;, concurrency: 1
+  node{ ... }
+</code></pre><h3 id="visualize-the-flow">Visualize the flow</h3>
+<p><strong>Before: Just a bunch of Jenkins jobs</strong><br>
+Jenkins had a dashboard view, but you have to build that manually. This also means that you have to keep it in sync with the actual pipeline as implemented across all jobs.<br>
+<strong>Jenkins Workflow: Stage view (enterprise feature)</strong><br>
+The Jenkins Workflow Stage View gives a clear overview of the actual pipeline.<br>
+<figure><img src="http://localhost:1313/img/workflow-big-responsive.png"
+    alt="Stage View plugin">
+</figure>
+</p>
+<h3 id="version-control">Version control</h3>
+<p><strong>Before: Export and import XML files</strong><br>
+As the workflow was scattered all over the place in many jobs being tied together, the only way to version control anything was by adding an XML export of all files in version control. But this means there is no versioning of the actual pipeline.<br>
+<strong>Jenkins Workflow: Pipeline in central file</strong><br>
+The central file used in Jenkins Workflow enables easy version control and versioning of the actual pipeline. A change to the pipeline can be easily spotted, by just looking at the history of this single file.</p>
+<h3 id="pipeline-templates">Pipeline templates</h3>
+<p><strong>Before: Building new pipelines required a lot of copy-pastes</strong><br>
+Each job had to be copy-pasted into a new one. Ordening in folders using the <code>Folders</code> plugin helped a little, but it was still not really perfect.<br>
+<strong>Jenkins Workflow: Pre-defined pipeline templates (enterprise feature)</strong><br>
+Cloudbees Jenkins Platform supports Workflow templates.</p>
+<h2 id="and-what-more-to-love-about-jenkins-workflow">And what more to love about Jenkins Workflow?</h2>
+<p>Jenkins Workflow brings even more than just the missing parts!</p>
+<h3 id="connect-existing-jobs">Connect existing jobs</h3>
+<p>To enable quick enablement, Jenkins Workflow support running your existing jobs. This way you don&rsquo;t have to rebuild all jobs at once.<br>
+This is done by using the <code>build job</code> command like following:</p>
+<pre tabindex="0"><code>def job = build job: &#39;say-hello&#39;, parameters: [[$class: &#39;StringParameterValue&#39;, name: &#39;who&#39;, value: &#39;Friends&#39;]]
+</code></pre><h3 id="customization">Customization</h3>
+<p>The scripts are based on Groovy DSL. Therefore it is easy to add some custom logic to the script when required and other files can be imported to enable reuse of scripts.<br>
+Next there is the Plugin support. Many plugins exists for Jenkins already and when these are kept Workflow compatible, they can be used straight from Groovy DSL.</p>
+<h3 id="docker-native-support">Docker native support</h3>
+<p>Docker integration is one of the strategic decisions from Cloudbees for Jenkins. That is why integration between Jenkins Workflow and Docker is great! It is possible to build/tag/start/push/pull images, run/stop containers, run on remote Docker servers, and so on.</p>
+<h3 id="checkpoints-enterprise-feature">Checkpoints (enterprise feature)</h3>
+<p>By setting checkpoints in the Workflow script, Jenkins is able to restart the pipeline from that point. Even when the Jenkins server reboots or crashes.</p>
+<h3 id="approvals">Approvals</h3>
+<p>Manual approval is supported using <code>input</code>. A has to approve to continue the pipeline. This can be handy for manual security testing for instance. This fits nicely in the Jenkins Workflow Stage View UI, giving a user friendly interface.</p>
+<pre tabindex="0"><code>input &#39;Are you sure?&#39;
+</code></pre><h3 id="stashing-and-archiving">Stashing and archiving</h3>
+<p>Jenkins Workflow support stashing files to share files between different Jenkins nodes. Archive works just like stash, but stash removes the files after pipeline completion, where archive ensures that these files are kept for later easy access.</p>
+<h3 id="tools">Tools</h3>
+<p>The <code>tools</code> command makes it possible to install a given tool on the Jenkins node on which the script will be executed. E.g. to install and run Maven on a node:</p>
+<pre tabindex="0"><code>def mvnHome = tool &#39;M3&#39;
+sh &#34;${mvnHome}/bin/mvn -B verify&#34;
+</code></pre><h2 id="an-example">An example</h2>
+<pre tabindex="0"><code>stage &#39;build&#39;
+node {
+  git &#39;https://github.com/cloudbees/todo-api.git&#39; withEnv([&#34;PATH+MAVEN=${tool &#39;m3&#39;}/bin&#34;]) {
+    sh &#34;mvn -B –Dmaven.test.failure.ignore=true clean package&#34;
+  }
+  stash excludes: &#39;target/&#39;, includes: &#39;**&#39;, name: &#39;source&#39;
+}
+stage &#39;test&#39;
+parallel &#39;integration&#39;: {
+  node {
+    unstash &#39;source&#39; withEnv([&#34;PATH+MAVEN=${tool &#39;m3&#39;}/bin&#34;]) {
+      sh &#34;mvn clean verify&#34;
+    }
+  }
+}, &#39;quality&#39;: {
+  node {
+    unstash &#39;source&#39; withEnv([&#34;PATH+MAVEN=${tool &#39;m3&#39;}/bin&#34;]) {
+      sh &#34;mvn sonar:sonar&#34;
+    }
+  }
+}
+stage &#39;approve&#39;
+timeout(time: 7, unit: &#39;DAYS&#39;) {
+  input message: &#39;Do you want to deploy?&#39;, submitter: &#39;ops&#39;
+}
+stage name:&#39;deploy&#39;, concurrency: 1
+node {
+  unstash &#39;source&#39; withEnv([&#34;PATH+MAVEN=${tool &#39;m3&#39;}/bin&#34;]) {
+    sh &#34;mvn cargo:deploy&#34;
+  }
+}
+</code></pre><h2 id="final-words">Final words</h2>
+<p>So Jenkins has some great support for Continuous Delivery pipelines. This really helps teams in focusing on the delivery of the thing they are building. It is obvious what steps it takes to get something into production. Also it becomes clear where most time is lost and when a parallel process might improve on shorter feedback loops. Kaizen!</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://dzone.com/refcardz/continuous-delivery-with-jenkins-workflow">https://dzone.com/refcardz/continuous-delivery-with-jenkins-workflow</a></li>
+<li><a href="https://documentation.cloudbees.com/docs/cookbook/_continuous_delivery_with_jenkins_workflow.html">https://documentation.cloudbees.com/docs/cookbook/_continuous_delivery_with_jenkins_workflow.html</a></li>
+</ul>
+
+      </div>
+    </article>
+
+    
+      <section class="dh-shell dh-section-block">
+        <div class="dh-section-heading">
+          <div>
+            <p class="dh-kicker">Continue reading</p>
+            <h2>More archive posts</h2>
+          </div>
+        </div>
+
+        <div class="dh-post-list dh-post-list-compact">
+          
+            <article class="dh-post-card">
+              <p class="dh-meta">Feb 2, 2017</p>
+              <h3><a href="http://localhost:1313/post/zplug/">Getting comfortable with the commandline, using zplug</a></h3>
+              <p>How to set up the commandline to look and feel good.</p>
+            </article>
+          
+            <article class="dh-post-card">
+              <p class="dh-meta">Dec 23, 2015</p>
+              <h3><a href="http://localhost:1313/post/mysite/">Building a blog using Hugo, GitHub, Digital Ocean and Docker</a></h3>
+              <p>How I build this site</p>
+            </article>
+          
+        </div>
+      </section>
+    
+
+    <section class="dh-shell dh-section-block dh-contact-strip">
+      <div>
+        <p class="dh-kicker">Stay in touch</p>
+        <h2>Prefer reading in a feed or talking directly?</h2>
+        <p>Subscribe, keep reading, or reach out when the work matches what you're trying to change.</p>
+      </div>
+      <div class="dh-link-cluster">
+        <a class="dh-text-link" href="http://localhost:1313/writing/">All writing</a>
+        <a class="dh-text-link" href="http://localhost:1313/index.xml">RSS</a>
+        <a class="dh-text-link" href="https://www.linkedin.com/in/daanhorn/">LinkedIn</a>
+        <a class="dh-button" href="mailto:daanhornnl@gmail.com">Email</a>
+      </div>
+    </section>
+  </main>
+
+
+  <footer class="dh-site-footer">
+    <div class="dh-shell dh-footer-shell">
+      <div>
+        <p class="dh-footer-title">Daan Horn</p>
+        <p class="dh-footer-copy">Thoughtful writing on engineering productivity, modern ways of working, and AI in software engineering.</p>
+      </div>
+
+      <nav class="dh-footer-links" aria-label="Footer links">
+        <a href="mailto:daanhornnl@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/daanhorn/">LinkedIn</a>
+        <a href="http://localhost:1313/index.xml">RSS</a>
+        
+          <span>Newsletter coming soon</span>
+        
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
+

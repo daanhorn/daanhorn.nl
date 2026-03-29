@@ -1,0 +1,31 @@
+{{ partial "header.html" . }}
+
+<main class="dh-main">
+  <section class="dh-shell dh-page-shell">
+    <p class="dh-kicker">Contact</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="dh-lead">{{ . }}</p>{{ end }}
+
+    <div class="dh-prose dh-prose-tight">
+      {{ .Content }}
+    </div>
+
+    <div class="dh-contact-methods">
+      {{ with .Site.Params.email }}
+        <a class="dh-contact-method" href="mailto:{{ . }}">
+          <span class="dh-contact-label">Email</span>
+          <span class="dh-contact-value">{{ . }}</span>
+        </a>
+      {{ end }}
+
+      {{ with .Site.Params.linkedin }}
+        <a class="dh-contact-method" href="{{ . }}">
+          <span class="dh-contact-label">LinkedIn</span>
+          <span class="dh-contact-value">{{ replaceRE "/$" "" (replace (replace . "https://" "") "http://" "") }}</span>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+</main>
+
+{{ partial "footer.html" . }}
